@@ -1,0 +1,4 @@
+SQLAlchemy
+pymysql
+python-dotenv
+cryptography
