@@ -1,0 +1,203 @@
+Ejercicio de Evaluación
+=======================
+
+Desarrollador TI Podemos Progresar
+----------------------------------
+
+
+Requisitos
+++++++++++
+
+Para enviar los resultados, subir todo a GitLab incluyendo el código y
+los archivos con explicaciones y demás archivos necesarios para
+reproducir el resultado, así como para explicar o documentar cualquier
+situación llevada a cabo para realizar el ejercicio. Entregar la URL
+del repositorio para que al clonarlo yo pueda reproducir el resultado.
+
+Como alternativa, enviar un archivo tar.gz (o zip o rar en su defecto)
+con todos los archivos incluidos como se explica mas arriba.
+
+No olvidar incluir así mismo una lista de las librerías de Python
+necesarias a instalar para que el ejercicio se ejecute sin problemas.
+De preferencia con un estilo como el de la salida del comando
+`pip freeze`.
+
+Si haces un sistema que se ejecute en un servidor en particular (web o
+de cualquier otro tipo), incluir versiones, plugins y demás código
+necesario, así como instrucciones para deployarlo.
+
+IMPORTANTE: no inlcuir archivos de IDEs y configuraciones de proyectos
+de ambientes específicos. El código debe poder usarse con Python a
+secas sin depender de ser levantado en un IDE o ambiente de gestión de
+proyectos en particular.
+
+
+Negocio
++++++++
+
+El negocio consiste en otorgar créditos a grupos de clientes. No se
+entregan créditos a clientes individuales, solo a grupos de ellos.
+
+Al desembolsar un crédito, se crea una cuenta para el grupo, y a esta
+se le asocia un calendario de pagos, de forma que el grupo ya sabe que
+debe ir pagando su crédito a plazos de 4 pagos. Los pagos son
+semanales.
+
+Pasos a seguir
+++++++++++++++
+
+1.- crear base de datos (modelo) MySQL (o de cualquier otro motor que
+pueda ser instalado en un sistema GNU/Linux, como PostgresSQL, SQLite,
+etc.) Si usas otro motor es posible que tengas que modificar los
+scripts anexos para que se puedan ejecutar sin problemas en tu motor
+de BD especifico.
+
+- ejecutar script admin.sql como superusuario
+
+- ejecutar script modelo_script.sql como usuario 'eval', password
+'password' (o cambia las credenciales editando el archivo admin.sql
+antes de ejecutarlo)
+
+el diagrama E-R de la base de datos se anexa en el archivo
+diagrama.png como documentación
+
+
+2.- datos muestra
+
+- cargar los datos en el modelo que se encuentran en los archivos
+data_*.csv
+
+Incluir en el resultado el método usado para hacer esto, así como
+cualquier script o archivo usado para realizar esta operación.
+
+La tabla Calendario de Pagos incluye fechas quizá ya obsoletas. Si es
+necesario y por claridad en el momento del desarrollo, se pueden
+modificar estas fechas. Incluir en el resultado un CSV con las
+modificaciones hechas para que sirvan como condiciones iniciales.
+
+
+3. sistema en Python (version a eleccion del desarrollador, IMPORTANTE
+especificarla en la entrega del resultado)
+
+crear una interfaz (a eleccion tuya, puede ser web, una GUI, de
+consola, webservice, etc...) Si es web, como se especifia mas arriba,
+incluir instrucciones de deployeo, pero entre mas independiente del
+servidor mejor, por ejemplo usando Django o Flask y su servidor de
+pruebas propio) para:
+
+- acceder al modelo tomando en cuenta que:
+
+  * un Grupo se conforma por N Clientes, a través de la tabla
+    Miembros (es una relacion muchos-a-muchos)
+
+  * una Cuenta le pertenece a un Grupo, un Grupo puede tener muchas
+    cuentas.
+
+  * el Calendario de pagos de una Cuenta dice las fechas esperadas en
+    que debe recibirse cada pago a la Cuenta y el estatus actual de cada
+    pago esperado
+
+  * cada Transacción hecha en una Cuenta se registra en la tabla
+    Transacciones
+
+  Las Cuentas pueden tener los estados: 'DESEMBOLSADA' al ser creada,
+  'CERRADA' cuando se han completado sus pagos.
+  El monto indica a cuanto asciende el préstamo inicial a un grupo. El
+  saldo indica cuanto se debe pagar todavía de la cuenta una vez que
+  se han ido haciendo pagos.
+
+  Un pago del Calendario indica en el campo monto a cuanto asciende el
+  monto esperado para ese pago. Al crear una Cuenta se crea su
+  calendario y se crean registros para este, dividiendo el monto de la
+  Cuenta entre la cantidad de pagos que tendrá. En el ejemplo, se
+  hacen siempre 4 pagos por cuenta pero esto podría variar.
+  Entonces el monto indicado en cada pago equivale al monto de la
+  Cuenta dividido entre el numero de pagos.
+  El numero de pago solo es un ordinal para diferenciar cada pago de
+  la Cuenta.
+  La fecha de pago es la fecha en que se espera recibir cada pago, que
+  en el ejemplo se hace semana con semana.
+  Los estados válidos para un pago son: 'PENDIENTE' es el estado
+  inicial al crear cada pago del calendario. 'PAGADO' sucede cuando se
+  recibe la totalidad del pago en el calendario. 'PARCIAL' sucede
+  cuando se ha recibido una cantidad de pago pero no su totalidad.
+  'ATRASADO' sucede cuando no se ha pagado la totalidad del pago
+  llegada la fecha de pago (no importa si se ha pagado una parte o no
+  se ha pagado nada).
+
+  Una transacción incluye una fecha en que se realiza dicha
+  transacción, y un monto que indica a cuanto asciende la transacción
+  hecha. Por ahora, sólo existe un tipo de transacción: 'Pago', para
+  registrar pagos en la Cuenta, por lo que no se incluye una columna
+  de tipo de transacción para otras transacciones hechas en la cuenta.
+  (Aunque, si te fijas en el archivo CSV de datos de transacciones,
+  veras algunas con montos negativos, haz caso omiso de este detalle,
+  pero de hecho esto es indicativo de un tipo distinto de
+  transaccion).
+
+
+  Este es un modelo reducido y resumido muy similar a como funciona
+  el modelo de datos principal que usamos en Podemos Progresar.
+
+
+- el sistema debe poder mostrar todos los clientes existentes. (Bonus,
+  pero déjalo hasta el final: poder crear/editar clientes).
+
+- el sistema debe poder mostrar todos los grupos existentes, listando
+  sus miembros (Bonus, hasta el final: poder crear/editar grupos,
+  agregando/quitando/cambiando sus miembros).
+
+- el sistema debe mostrar, para cada grupo, sus Cuentas existentes,
+  mostrando sus datos generales, así como su calendario de pagos en su
+  estatus actual, y las transacciones hechas a la misma. (Bonus++, al
+  final: poder crear una cuenta nueva para algún grupo <- no olvidar
+  que una cuenta nueva incluye un calendario de pagos prehecho desde
+  el inicio)
+
+- el sistema debe permitir introducir un pago en una Cuenta dada. Si
+  el pago llega al total del monto, la cuenta se cierra
+  automáticamente. Incluir validaciones para evitar recibir un pago
+  que exceda la deuda actual y rechazar el pago.
+
+
+Consideraciones generales
++++++++++++++++++++++++++
+
+(si por alguna razón no es posible hacer el sistema tomándolas en
+cuenta, explicar en el resultado final la o las razones por las que no
+se llevaron a cabo):
+
+- El sistema debe estar hecho para que se permita incluir fácilmente
+  una nueva interfaz, distinta a la desarrollada, sin necesidad de
+  duplicar código o depender de librerías de alguna interfaz
+  especifica.
+
+- El sistema debe incluir pruebas unitarias.
+
+
+Recomendaciones 
++++++++++++++++
+
+(no son obligatorias)
+
+- usa virtualenvs para mantener todo tu ambiente en un solo directorio
+  y mantener las dependencias libres y limpias en el resto de tu
+  sistema.
+
+- cuando tengas tu código listo, prueba a 'instalarlo' fuera de tu
+  ambiente de trabajo para que también compruebes que se deploya y
+  ejecuta correctamente.
+
+- usar una librería para acceder a la base de datos de manera genérica
+  (un ORM) para no depender ni de un motor de base de datos
+  específico, ni tener código de bajo nivel de acceso a la BD dentro
+  del código del sistema (acá usamos SQLAlchemy, puedes usar la que
+  quieras).
+
+- haz una API!
+
+
+
+Javier Novoa C.
+Coordinador TI, Podemos Progresar
+jstitch@gmail.com
