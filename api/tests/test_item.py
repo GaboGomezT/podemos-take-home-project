@@ -1,12 +1,14 @@
 import pytest
 from factories.client import ClientFactory
-from podemos.resources.client import save_client, get_client, ClientModel
+from podemos.resources.client import ClientModel
 from database import db_session
 
 def test_save_client():
-    save_client("a1", "Eduardo")
-    client = db_session.query(ClientModel).get("a1")
-    
-    assert client is not None
+    client = ClientModel("zzz", "Eduardo David")
+    client.save_to_db()
+    saved_client = db_session.query(ClientModel).get(client.id)
 
-    # Delete inserted row after
+    assert saved_client is not None
+
+    db_session.delete(client)
+    db_session.commit()
