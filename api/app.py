@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api
-from resources.client import ClientList
+from resources.client import ClientList, Client
 from database import db_session
 from models.base_model import BaseModel
 
@@ -13,6 +13,7 @@ def shutdown_session(exception=None):
     db_session.remove()
 
 api.add_resource(ClientList, "/clients")
+api.add_resource(Client, "/client")
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

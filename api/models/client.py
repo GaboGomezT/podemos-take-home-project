@@ -9,7 +9,7 @@ class ClientModel(BaseModel):
 
     def __init__(self, _id, nombre):
         self.id = _id
-        self.name = name
+        self.nombre = nombre
 
     def json(self):
         return {"id": self.id, "nombre": self.nombre}
