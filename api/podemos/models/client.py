@@ -1,5 +1,6 @@
 from podemos.models import BaseModel
 from sqlalchemy import Column, String
+from database import db_session
 
 class ClientModel(BaseModel):
     __tablename__ = "Clientes"
@@ -13,3 +14,12 @@ class ClientModel(BaseModel):
 
     def json(self):
         return {"id": self.id, "nombre": self.nombre}
+    
+    def save_to_db(self):
+        db_session.add(self)
+        db_session.commit()
+
+    @classmethod
+    def get_client(cls, _id):
+        return db_session.query(cls).get(_id)
+

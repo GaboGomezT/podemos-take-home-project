@@ -10,7 +10,7 @@ class Client(Resource):
     def get(self):
         _id = request.args.get("id", type=str)
         if _id:
-            client = get_client(_id)
+            client = ClientModel.get_client(_id)
             return client.json()
         return {"message": "id cannot be empty"}
 
@@ -18,14 +18,8 @@ class Client(Resource):
         _id = request.args.get("id", type=str)
         nombre = request.args.get("nombre", type=str)
         if _id and nombre:
-            save_client(_id, nombre)
+            client = ClientModel(_id, nombre)
+            client.save_to_db()
             return {"message": "New Client Sucessfully Created"}
         return {"message": "Both id and nombre are neccesary"}
 
-def save_client(_id, nombre):
-    new_client = ClientModel(_id, nombre)
-    db_session.add(new_client)
-    db_session.commit()
-
-def get_client(_id):
-    return db_session.query(ClientModel).get(_id)
