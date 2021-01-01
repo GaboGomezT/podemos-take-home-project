@@ -2,3 +2,5 @@ SQLAlchemy
 pymysql
 python-dotenv
 cryptography
+Flask-RESTful
+Flask-SQLAlchemy
