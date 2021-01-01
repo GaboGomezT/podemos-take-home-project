@@ -8,7 +8,8 @@ load_dotenv()
 user = getenv("PODEMOS_DB_USER")
 password = getenv("PODEMOS_DB_PASS")
 db_url = getenv("PODEMOS_DB_URL")
-db_uri = f"mysql+pymysql://{user}:{password}@{db_url}:3306"
+db_port = getenv("PODEMOS_DB_PORT")
+db_uri = f"mysql+pymysql://{user}:{password}@{db_url}:{db_port}"
 
 engine = create_engine(db_uri)
 

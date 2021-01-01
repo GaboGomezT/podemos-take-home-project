@@ -10,8 +10,9 @@ load_dotenv()
 user = getenv("PODEMOS_DB_USER")
 password = getenv("PODEMOS_DB_PASS")
 db_url = getenv("PODEMOS_DB_URL")
+db_port = getenv("PODEMOS_DB_PORT")
 
-engine = create_engine(f"mysql+pymysql://{user}:{password}@{db_url}:3306/podemos_eval")
+engine = create_engine(f"mysql+pymysql://{user}:{password}@{db_url}:{db_port}")
 db_session = scoped_session(sessionmaker(autocommit=False,autoflush=False,bind=engine))
 
 BaseModel.query = db_session.query_property()
