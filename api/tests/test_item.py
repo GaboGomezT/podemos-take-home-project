@@ -1,5 +1,4 @@
 import pytest
-from factories.client import ClientFactory
 from podemos.resources.client import ClientModel
 from database import db_session
 

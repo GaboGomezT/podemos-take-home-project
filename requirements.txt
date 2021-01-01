@@ -7,4 +7,3 @@ Flask-SQLAlchemy
 
 # dev dependancies
 pytest
-factory-boy
