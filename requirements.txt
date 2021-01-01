@@ -4,3 +4,7 @@ python-dotenv
 cryptography
 Flask-RESTful
 Flask-SQLAlchemy
+
+# dev dependancies
+pytest
+factory-boy
