@@ -1,4 +1,4 @@
-from models.base_model import BaseModel
+from podemos.models import BaseModel
 from sqlalchemy import Column, String
 
 class ClientModel(BaseModel):

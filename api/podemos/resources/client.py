@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from models.client import ClientModel
+from podemos.models.client import ClientModel
 from flask import request
 from database import db_session
 class ClientList(Resource):
@@ -11,8 +11,11 @@ class Client(Resource):
         _id = request.args.get("id", type=str)
         nombre = request.args.get("nombre", type=str)
         if _id and nombre:
-            new_client = ClientModel(_id, nombre)
-            db_session.add(new_client)
-            db_session.commit()
+            save_client(_id, nombre)
             return {"message": "New Client Sucessfully Created"}
         return {"message": "Both id and nombre are neccesary"}
+
+def save_client(_id, nombre):
+    new_client = ClientModel(_id, nombre)
+    db_session.add(new_client)
+    db_session.commit()

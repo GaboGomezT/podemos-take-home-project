@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restful import Api
-from resources.client import ClientList, Client
+from podemos.resources.client import ClientList, Client
 from database import db_session
-from models.base_model import BaseModel
+from podemos.models.base_model import BaseModel
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

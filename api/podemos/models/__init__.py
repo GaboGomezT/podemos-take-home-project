@@ -1,0 +1,1 @@
+from podemos.models.base_model import BaseModel
