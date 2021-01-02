@@ -1,6 +1,7 @@
 from podemos.models import BaseModel
 from sqlalchemy import Column, String
 from database import db_session
+from podemos.errors import ClientAlreadyExists
 
 class ClientModel(BaseModel):
     __tablename__ = "Clientes"
@@ -16,6 +17,8 @@ class ClientModel(BaseModel):
         return {"id": self.id, "nombre": self.nombre}
     
     def save_to_db(self):
+        if ClientModel.get_client(self.id):
+             raise ClientAlreadyExists()
         db_session.add(self)
         db_session.commit()
 
