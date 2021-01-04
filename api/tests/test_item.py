@@ -22,7 +22,7 @@ def test_save_client_already_exists():
     db_session.delete(client)
     db_session.commit()
 
-def test_all_clients():
+def test_get_all_clients():
     result = get_all_clients()
     assert type(result) is list
     assert len(result) > 0 # Esto es porque no tenemos una bd solamente para pruebas. Espacio de mejora.
