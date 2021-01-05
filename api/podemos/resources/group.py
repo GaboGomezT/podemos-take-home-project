@@ -7,7 +7,8 @@ from podemos.errors import GroupAlreadyExists
 
 class GroupList(Resource):
     def get(self):
-        return {"groups": get_all_groups()}
+        with_members = request.args.get("with-members", type=bool, default=False)
+        return {"groups": get_all_groups(with_members)}
 
 class Group(Resource):
     def get(self):

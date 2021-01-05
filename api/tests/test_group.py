@@ -28,4 +28,13 @@ def test_get_all_groups():
     assert type(result) is list
     assert len(result) > 0 # Esto es porque no tenemos una bd solamente para pruebas. Espacio de mejora.
     assert type(result[0]) is dict
-    assert len(set(result[0].keys()) and set(["id", "nombre"])) == 2   
+    expected_keys = ["id", "nombre"]
+    assert len(set(result[0].keys()) and set(expected_keys)) == len(expected_keys)
+
+def test_get_all_group_w_members():
+    result = get_all_groups(with_members=True)
+    assert type(result) is list
+    assert len(result) > 0 # Esto es porque no tenemos una bd solamente para pruebas. Espacio de mejora.
+    assert type(result[0]) is dict
+    expected_keys = ["id", "nombre", "members"]
+    assert len(set(result[0].keys()) and set(expected_keys)) == len(expected_keys)
