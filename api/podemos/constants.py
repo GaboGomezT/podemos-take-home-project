@@ -1,0 +1,6 @@
+const DISBURSED = "DESEMBOLSADA"
+const CLOSED = "CERRADA"
+const PENDING = "PENDIENTE"
+const PAID = "PAGADO"
+const PARTIAL = "PARCIAL"
+const LATE = "ATRASADO"
