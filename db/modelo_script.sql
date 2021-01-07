@@ -55,7 +55,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `podemos_eval`.`CalendarioPagos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `podemos_eval`.`CalendarioPagos` (
-  `id` INT(11) NOT NULL COMMENT '',
+  `id` INT(11) NOT NULL COMMENT '' AUTO_INCREMENT,
   `cuenta_id` VARCHAR(5) NOT NULL COMMENT '',
   `num_pago` INT(11) NOT NULL COMMENT '',
   `monto` DECIMAL(15,2) NOT NULL COMMENT '',
@@ -109,7 +109,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `podemos_eval`.`Transacciones`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `podemos_eval`.`Transacciones` (
-  `id` INT(11) NOT NULL COMMENT '',
+  `id` INT(11) NOT NULL COMMENT '' AUTO_INCREMENT,
   `cuenta_id` VARCHAR(5) NOT NULL COMMENT '',
   `fecha` DATETIME NOT NULL COMMENT '',
   `monto` DECIMAL(15,2) NOT NULL COMMENT '',
