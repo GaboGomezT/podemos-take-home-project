@@ -1,6 +1,4 @@
 from podemos.models import BaseModel
-from podemos.models.calendar import CalendarModel
-from podemos.models.transaction import TransactionModel
 from sqlalchemy import Column, String, Numeric
 from sqlalchemy.orm import relationship
 from database import db_session
