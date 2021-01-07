@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "b712e6fe-77ae-41ca-99cd-23d635691b48",
+		"name": "Podemos Progresar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/groups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/groups",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"groups"
+					]
+				},
+				"description": "Obtiene todos los grupos de la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "/groups con miembros",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/groups?with-members=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"groups"
+					],
+					"query": [
+						{
+							"key": "with-members",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Obtiene todos los grupos de la base de datos pero con la lista de miembros de cada grupo.  Este bandera es opcional"
+			},
+			"response": []
+		},
+		{
+			"name": "/client",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/client?id=bb&nombre=Gabriel Gomez",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"client"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "bb"
+						},
+						{
+							"key": "nombre",
+							"value": "Gabriel Gomez"
+						}
+					]
+				},
+				"description": "Agrega un cliente a la BD"
+			},
+			"response": []
+		},
+		{
+			"name": "/group",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/client?id=AAAAA&nombre=Avengers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"client"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "AAAAA"
+						},
+						{
+							"key": "nombre",
+							"value": "Avengers"
+						}
+					]
+				},
+				"description": "Agrega un grupo a la BD"
+			},
+			"response": []
+		},
+		{
+			"name": "/client",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/client?id=bb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"client"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "bb"
+						}
+					]
+				},
+				"description": "Obtiene algun cliente a través de su id"
+			},
+			"response": []
+		},
+		{
+			"name": "/group",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/client?id=AAAAA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"client"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "AAAAA"
+						}
+					]
+				},
+				"description": "Obtiene un grupo de la BD através de su id"
+			},
+			"response": []
+		},
+		{
+			"name": "/accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/accounts?group-id=XYZW1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "group-id",
+							"value": "XYZW1"
+						}
+					]
+				},
+				"description": "Obtiene todas las cuentas para algún grupo a través de la id de este."
+			},
+			"response": []
+		},
+		{
+			"name": "/account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/account?id=12308&with-calendar=true&with-transactions=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"account"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "12308"
+						},
+						{
+							"key": "with-calendar",
+							"value": "true"
+						},
+						{
+							"key": "with-transactions",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Regresa la información de alguna cuenta junto con su calendario de pagos y transacciones según los valores de las banderas. Por defecto las banderas son recibidas como false. Estas dos últimas banderas son opcionales"
+			},
+			"response": []
+		},
+		{
+			"name": "/account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/account?id=12308&group-id=XYZW1&amount=200000&payments=6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"account"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "12308"
+						},
+						{
+							"key": "group-id",
+							"value": "XYZW1"
+						},
+						{
+							"key": "amount",
+							"value": "200000"
+						},
+						{
+							"key": "payments",
+							"value": "6"
+						}
+					]
+				},
+				"description": "Crea una cuenta junto con su calendario de pagos según el monto y el plazo de semanas."
+			},
+			"response": []
+		},
+		{
+			"name": "/payment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/payment?account-id=12308",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"payment"
+					],
+					"query": [
+						{
+							"key": "account-id",
+							"value": "12308"
+						}
+					]
+				},
+				"description": "Hace un pago a alguna cuenta a través de su id"
+			},
+			"response": []
+		}
+	]
+}

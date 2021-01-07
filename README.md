@@ -132,4 +132,5 @@ Puedes probar mi ejecución en
 ```
 http://142.93.71.205/clients
 ```
-Para ver los demás endpoint revisa el archivo *ENDPOINT* en la raíz del proyecto
+Para ver los demás endpoint revisa el archivo *ENDPOINT* en la raíz del proyecto.
+Este es una colección de requests en Postman. Lo puede importar y desde ahí los prueba, viene incluido con descripción de cada endpoint.
