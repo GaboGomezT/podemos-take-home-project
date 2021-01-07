@@ -12,6 +12,7 @@ class GroupModel(BaseModel):
     nombre = Column(String(20))
 
     members = relationship("MemberModel", lazy="dynamic")
+    accounts = relationship("AccountModel", lazy="dynamic")
 
     def __init__(self, _id, nombre):
         self.id = _id

@@ -14,3 +14,11 @@ class TransactionModel(BaseModel):
     monto = Column(Numeric(15,2))
 
     cuenta = relationship("AccountModel", foreign_keys=[cuenta_id])
+
+    def json(self):
+        return {
+            "id": self.id,
+            "cuenta_id": self.cuenta_id,
+            "fecha": self.fecha,
+            "monto": self.monto
+        }

@@ -3,6 +3,7 @@ from podemos.models.group import GroupModel
 from sqlalchemy import Column, String, Numeric, ForeignKey
 from sqlalchemy.orm import relationship
 from database import db_session
+from podemos.errors import AccountAlreadyExists
 
 class AccountModel(BaseModel):
     __tablename__ = "Cuentas"
@@ -17,11 +18,26 @@ class AccountModel(BaseModel):
     calendar_payments = relationship("CalendarModel", lazy="dynamic")
     transactions = relationship("TransactionModel", lazy="dynamic")
 
-    def json():
-        return {
+    def save_to_db(self):
+        if db_session.query(AccountModel).get(self.id):
+             raise AccountAlreadyExists()
+        db_session.add(self)
+        db_session.commit()
+
+    @classmethod
+    def get_account(cls, _id):
+        return db_session.query(cls).get(_id)
+
+    def json(self, with_calendar=False, with_transactions=False):
+        account_dict = {
             "id": self.id,
             "grupo_id": self.grupo_id,
             "estatus": self.estatus,
             "monto": self.monto,
             "saldo": self.saldo
         }
+        if with_calendar:
+            account_dict["calendar_payments"] = [calendar_payment.json() for calendar_payment in self.calendar_payments.all()]
+        if with_transactions:
+            account_dict["transactions"] = [transaction.json() for transaction in self.transactions.all()]
+        return account_dict

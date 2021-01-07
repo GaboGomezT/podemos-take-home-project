@@ -16,3 +16,13 @@ class CalendarModel(BaseModel):
     estatus = Column(String(15))
 
     cuenta = relationship("AccountModel", foreign_keys=[cuenta_id])
+
+    def json(self):
+        return {
+            "id": self.id,
+            "cuenta_id": self.cuenta_id,
+            "num_pago": self.num_pago,
+            "monto": self.monto,
+            "fecha_pago": self.fecha_pago,
+            "estatus": self.estatus
+        }
