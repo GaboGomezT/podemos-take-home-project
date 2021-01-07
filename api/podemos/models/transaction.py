@@ -1,5 +1,4 @@
 from podemos.models import BaseModel
-from podemos.models.account import AccountModel
 from sqlalchemy import Column, String, Numeric, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from database import db_session
@@ -12,8 +11,6 @@ class TransactionModel(BaseModel):
     cuenta_id = Column(String(5), ForeignKey("podemos_eval.Cuentas.id"))
     fecha = Column(DateTime)
     monto = Column(Numeric(15,2))
-
-    cuenta = relationship("AccountModel", foreign_keys=[cuenta_id])
 
     def json(self):
         return {

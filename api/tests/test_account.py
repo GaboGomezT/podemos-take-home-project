@@ -27,14 +27,14 @@ def test_get_account_with_all_information():
     transaction.monto = 20_000
 
     account = AccountModel()
-    account.id = "LALSK"
+    account.id = "IIII"
     account.estatus = DISBURSED
     account.monto = 100_000
     account.saldo = 80_000
     account.calendar_payments = payments
     account.transactions = [transaction]
 
-    group = GroupModel(_id="OOOO", nombre="Modern Family")
+    group = GroupModel(_id="SSSS", nombre="Modern Family")
     group.accounts = [account]
     group.save_to_db()
 
