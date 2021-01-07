@@ -12,3 +12,6 @@ class AccountAlreadyExists(Exception):
 class MissingGroup(Exception):
     def __init__(self):
         super().__init__("You are trying to create an account for a group that doesn't exist")
+class PaymentExceedsDebt(Exception):
+    def __init__(self):
+        super().__init__("Payment recieved for account is greater than remaining debt.")

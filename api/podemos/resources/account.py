@@ -23,7 +23,7 @@ class Account(Resource):
         with_transactions = request.args.get("with-transactions", type=bool, default=False)
         if _id:
             account = AccountModel.get_account(_id)
-            return account.json(with_calendar, with_transactions)
+            return account.json(with_calendar, with_transactions) if account else {"message": "Account doesn't exist"}
         return {"message": "id cannot be empty"}
 
     def post(self):

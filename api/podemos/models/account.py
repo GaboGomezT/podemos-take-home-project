@@ -5,7 +5,9 @@ from podemos.models.transaction import TransactionModel
 from sqlalchemy import Column, String, Numeric, ForeignKey
 from sqlalchemy.orm import relationship
 from database import db_session
-from podemos.errors import AccountAlreadyExists, MissingGroup
+from podemos.errors import AccountAlreadyExists, MissingGroup, PaymentExceedsDebt
+from podemos.constants import CLOSED, PAID, LATE, PARTIAL
+from datetime import datetime
 
 class AccountModel(BaseModel):
     __tablename__ = "Cuentas"
@@ -31,6 +33,23 @@ class AccountModel(BaseModel):
     @classmethod
     def get_account(cls, _id):
         return db_session.query(cls).get(_id)
+
+    def pay_account(self, amount):
+        self.saldo -= amount
+        if self.saldo < 0:
+            raise PaymentExceedsDebt()
+        if self.saldo == 0:
+            self.estatus = CLOSED
+        
+        transaction = TransactionModel()
+        transaction.fecha = datetime.now()
+        transaction.monto = amount
+
+        transactions = self.transactions.all()
+        transactions.append(transaction)
+
+        self.transactions = transactions
+        db_session.commit()
 
     def json(self, with_calendar=False, with_transactions=False):
         account_dict = {
