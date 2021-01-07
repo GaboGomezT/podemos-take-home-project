@@ -89,7 +89,7 @@ python populate_db.py
 Un comando SQL sencillo desde la línea de comando nos demuestra como sí hay registros en las tablas.
 ![](db_screen.png)
 
-## Ejecución de la API
+## Ejecución de las pruebas unitarias
 Nos dirigimos hacia la raíz del proyecto
 ```
 cd ..
@@ -98,8 +98,38 @@ Ejecutamos las pruebas para asegurarnos que todo se encuentra bien
 ```
 make tests
 ```
-ahora para correr la app simplemente escribimos
+
+## Configuración de NGINX
+Borramos las configuraciones por defecto
 ```
-python api/app.py
+rm /etc/nginx/sites-enabled/default
+```
+creamos un archivo (usa el editor que te guste) y que tenga los siguientes contenidos
+```
+nano /etc/nginx/sites-enabled/podemos
+```
+server_name debería tener la IP de tu servidor
+![](nginx_config.png)
+
+Permitimos tráfico http y reiniciamos nginx
+```
+sudo ufw allow http/tcp
+sudo systemctl restart nginx
 ```
 
+## Ejecutamos la API
+
+Regresamos a nuestro proyecto
+y entramos a la carpeta api
+Aquí ejecutamos gunicorn
+```
+gunicorn -w 3 wsgi:app
+```
+## Listo! 
+Ahora podemos usar nuestra api desde la web.
+
+Puedes probar mi ejecución en 
+```
+http://142.93.71.205/clients
+```
+Para ver los demás endpoint revisa el archivo *ENDPOINT* en la raíz del proyecto
