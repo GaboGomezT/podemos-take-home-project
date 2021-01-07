@@ -10,7 +10,6 @@ class Payment(Resource):
         payment_amount = request.args.get("payment-amount", type=int)
         
         if account_id and payment_amount:
-            print(f"\033[94m account model creation\033[0m")
             account = AccountModel.get_account(account_id)
             try:
                 account.pay_account(amount=payment_amount)

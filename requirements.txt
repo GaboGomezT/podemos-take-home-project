@@ -1,9 +1,8 @@
-SQLAlchemy
-pymysql
-python-dotenv
-cryptography
-Flask-RESTful
-Flask-SQLAlchemy
+SQLAlchemy==1.3.22
+PyMySQL==0.10.1
+python-dotenv==0.15.0
+cryptography==3.3.1
+Flask-RESTful==0.3.8
 
 # dev dependancies
-pytest
+pytest==6.2.1
