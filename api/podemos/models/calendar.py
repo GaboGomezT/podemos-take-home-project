@@ -19,7 +19,7 @@ class CalendarModel(BaseModel):
             "id": self.id,
             "cuenta_id": self.cuenta_id,
             "num_pago": self.num_pago,
-            "monto": self.monto,
-            "fecha_pago": self.fecha_pago,
+            "monto": float(self.monto),
+            "fecha_pago": self.fecha_pago.strftime('%d/%m/%Y'),
             "estatus": self.estatus
         }

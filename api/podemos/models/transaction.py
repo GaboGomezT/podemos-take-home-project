@@ -16,6 +16,6 @@ class TransactionModel(BaseModel):
         return {
             "id": self.id,
             "cuenta_id": self.cuenta_id,
-            "fecha": self.fecha,
-            "monto": self.monto
+            "fecha": self.fecha.strftime('%d/%m/%Y'),
+            "monto": float(self.monto)
         }

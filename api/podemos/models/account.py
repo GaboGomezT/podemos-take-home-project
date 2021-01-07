@@ -5,7 +5,7 @@ from podemos.models.transaction import TransactionModel
 from sqlalchemy import Column, String, Numeric, ForeignKey
 from sqlalchemy.orm import relationship
 from database import db_session
-from podemos.errors import AccountAlreadyExists
+from podemos.errors import AccountAlreadyExists, MissingGroup
 
 class AccountModel(BaseModel):
     __tablename__ = "Cuentas"
@@ -22,7 +22,9 @@ class AccountModel(BaseModel):
 
     def save_to_db(self):
         if db_session.query(AccountModel).get(self.id):
-             raise AccountAlreadyExists()
+            raise AccountAlreadyExists()
+        if not db_session.query(GroupModel).get(self.grupo_id):
+            raise MissingGroup()
         db_session.add(self)
         db_session.commit()
 
@@ -35,8 +37,8 @@ class AccountModel(BaseModel):
             "id": self.id,
             "grupo_id": self.grupo_id,
             "estatus": self.estatus,
-            "monto": self.monto,
-            "saldo": self.saldo
+            "monto": float(self.monto),
+            "saldo": float(self.saldo)
         }
         if with_calendar:
             account_dict["calendar_payments"] = [calendar_payment.json() for calendar_payment in self.calendar_payments.all()]

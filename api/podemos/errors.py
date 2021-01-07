@@ -9,3 +9,6 @@ class GroupAlreadyExists(Exception):
 class AccountAlreadyExists(Exception):
     def __init__(self):
         super().__init__("Accounts with this ID already exists in DB")
+class MissingGroup(Exception):
+    def __init__(self):
+        super().__init__("You are trying to create an account for a group that doesn't exist")
